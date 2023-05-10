@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+
+{{products.description|truncatewords:155}}
+
+{% endblock %}
+
+{% block title %}
+
+    {% if category %}
+        {{products.name}} - Kite Store
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row my_pro_row_class">
+    <div class="mx_auto">
+        <p>
+            <a href="{% url 'Kite:AllProductCat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a><br><br>{{product.name}}
+        </p>
+    </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text=center">
+        <div style="min-width:20rem">
+            <img src="{{product.img.url}}" alt="{{product.name}}">
+        </div>
+    </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div>
+                <h1 class="pro_title">{{product.name}}</h1>
+                <p>$   {{product.price}}/-</p>
+                <p class="dic_title">Product Description</p>
+                <p class="text-justify pro_text">{{product.dic}}</p>
+                {% if product.stock <= 0 %}
+                <p class="text-justify pro_text"><b>Our Of Stock</b></p>
+                {% else %}
+                <a class="btn btn-secondary" href="{% url 'Cart:add_cart' product.id %}">Add To Cart</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
